@@ -10,19 +10,20 @@ class BlogController extends Controller
 {
     // ...
 
-    public function addCommentAction(Post $post)
+    public function addCommentAction()
     {
-        $comment = new Comment();
+//        $comment = new Comment();
 
         // ... setup $form, and submit data
 
-        if ($form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($comment);
-            $entityManager->flush();
+//        if ($form->isValid()) {
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $entityManager->persist($comment);
+//            $entityManager->flush();
 
             // creating the ACL
             $aclProvider = $this->get('security.acl.provider');
+        echo "<pre>"; print_r($aclProvider); die();
             $objectIdentity = ObjectIdentity::fromDomainObject($comment);
             $acl = $aclProvider->createAcl($objectIdentity);
 
@@ -34,6 +35,6 @@ class BlogController extends Controller
             // grant owner access
             $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
             $aclProvider->updateAcl($acl);
-        }
+//        }
     }
 }
